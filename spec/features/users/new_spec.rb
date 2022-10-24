@@ -7,6 +7,8 @@ RSpec.describe 'User Registration Page', type: :feature do
 
       fill_in('Name', with: 'Becka')
       fill_in('Email', with: 'rebecka@gmail.com')
+      fill_in('Password', with: 'test1')
+      fill_in('Password confirmation', with: 'test1')
 
       click_button 'Create New User'
 
@@ -18,7 +20,7 @@ RSpec.describe 'User Registration Page', type: :feature do
 
   describe 'User Registration Form - Sad Path' do
     it 'can only create a user when the email is unique' do
-      @user1 = User.create!(name: 'Becka', email: 'rebecka@gmail.com')
+      @user1 = User.create!(name: 'Becka', email: 'rebecka@gmail.com', password: "test")
 
       visit '/register'
 
@@ -52,9 +54,23 @@ RSpec.describe 'User Registration Page', type: :feature do
       fill_in('Email', with: 'thomas@gmail.com')
 
       click_button 'Create New User'
-
+      
       expect(current_path).to eq('/register')
-      expect(page).to have_content('User not created')
+      expect(page).to have_content('User not created, invalid credentials provided')
+      expect(User.count).to eq(0)
+    end
+
+    it 'can only create a user when the password and password_confirmation match' do
+      visit '/register'
+
+      fill_in('Name', with: 'Thomas')
+      fill_in('Email', with: 'thomas@aol.com')
+      fill_in('Password', with: 'test1')
+      fill_in('Password confirmation', with: 'test')
+
+      click_button 'Create New User'
+      expect(page).to have_content('Passwords do not match')
+      expect(current_path).to eq('/register')
       expect(User.count).to eq(0)
     end
   end
