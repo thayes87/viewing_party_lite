@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get '/', to: 'landing#index'
+  get '/login', to: 'users#login_form'
+  post '/login', to: 'users#login'
 
   match 'register', via: :get, to: 'users#new'
   resources :users, only: [:show, :create] do
