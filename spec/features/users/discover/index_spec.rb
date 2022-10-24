@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Discover Movies Page', type: :feature do
   describe 'When I visit the user_discover_index_path, I should see' do
     it 'has a button to discover top rated movies' do
-      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu')
+      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
 
       visit user_discover_index_path(user1)
 
@@ -11,7 +11,7 @@ RSpec.describe 'Discover Movies Page', type: :feature do
     end
 
     it 'when the top rated movies button is clicked, the user is taken to the movies results page' do
-      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu')
+      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
 
       visit user_discover_index_path(user1)
 
@@ -26,7 +26,7 @@ RSpec.describe 'Discover Movies Page', type: :feature do
     end
 
     it 'has a text field to enter keyword(s) to search by movie title' do
-      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu')
+      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
 
       visit user_discover_index_path(user1)
 
@@ -34,7 +34,7 @@ RSpec.describe 'Discover Movies Page', type: :feature do
     end
 
     it 'has a button to search by Movie Title' do
-      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu')
+      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
 
       visit user_discover_index_path(user1)
 
@@ -42,7 +42,7 @@ RSpec.describe 'Discover Movies Page', type: :feature do
     end
 
     it 'when the search field is filled in and the search button is clicked, the user is taken to the movies results page' do
-      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu')
+      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
 
       visit user_discover_index_path(user1)
 
@@ -58,7 +58,7 @@ RSpec.describe 'Discover Movies Page', type: :feature do
     end
 
     it 'when the search field is not filled in and the search button is clicked, the user is redirected back to the discover page and a message is displayed' do
-      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu')
+      user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
 
       visit user_discover_index_path(user1)
 
