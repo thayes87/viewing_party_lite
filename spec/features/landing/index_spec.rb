@@ -26,7 +26,7 @@ RSpec.describe 'landing page', type: :feature do
       @user3 = User.create!(name: 'Meg', email: 'mstang@turing.edu', password: "test")
     end
 
-    it 'has a list of existing user which links to the users dashboard' do
+    xit 'has a list of existing user which links to the users dashboard' do
       visit '/'
 
 
@@ -51,6 +51,21 @@ RSpec.describe 'landing page', type: :feature do
       expect(page).to have_link('Home')
       click_link('Home')
       expect(current_path).to eq('/')
+    end
+  end
+
+  describe 'as a user when I visit the landing page' do 
+      it 'I do not see the section of the page that lists existing users' do 
+      @user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
+      @user2 = User.create!(name: 'Mike', email: 'mike@turing.edu', password: "test")
+      @user3 = User.create!(name: 'Meg', email: 'mstang@turing.edu', password: "test")
+
+      visit '/'
+
+      expect(page).to_not have_content("epintozzi@turing.edu")
+      expect(page).to_not have_content("mike@turing.edu")
+      expect(page).to_not have_content("mstang@turing.edu")
+
     end
   end
 end
