@@ -29,7 +29,7 @@ RSpec.describe 'registered users login in' do
 
       click_on("Log In")
 
-      expect(current_path).to eq(user_path(user))
+      expect(current_path).to eq(dashboard_path)
     end
   end
 
@@ -49,4 +49,59 @@ RSpec.describe 'registered users login in' do
         expect(page).to have_content('Invalid Credentials')
       end
     end
+
+  describe 'As a logged in user When I visit the landing page' do
+    it 'I no longer see a link to log in or create and account' do
+      user = User.create(name: 'Tom', email: 'tom@aol.com', password: 'test123')
+        visit '/'
+  
+        click_link('Log In')
+  
+        fill_in("Email", with: user.email)
+        fill_in("Password", with: 'test123')
+  
+        click_on("Log In")
+  
+        visit '/'
+
+        expect(page).to_not have_link("Log In")
+        expect(page).to_not have_button("Create a New User")
+    end
+
+    it 'I see a link to Log Out' do
+      user = User.create(name: 'Tom', email: 'tom@aol.com', password: 'test123')
+      visit '/'
+  
+        click_link('Log In')
+  
+        fill_in("Email", with: user.email)
+        fill_in("Password", with: 'test123')
+  
+        click_on("Log In")
+  
+        visit '/'
+
+        expect(page).to have_link("Log Out")
+    end
+
+    it 'When I click the link to Log Out Im taken to the landing page And I can see that the Log Out link has changed back to a Log In link' do
+      user = User.create(name: 'Tom', email: 'tom@aol.com', password: 'test123')
+      visit '/'
+
+      click_link('Log In')
+
+      fill_in("Email", with: user.email)
+      fill_in("Password", with: 'test123')
+
+      click_on("Log In")
+
+      visit '/'
+      click_link("Log Out")
+
+      expect(current_path).to eq('/')
+
+      expect(page).to have_link("Log In")
+      expect(page).to have_button("Create a New User")
+    end
+  end
 end 
