@@ -55,7 +55,7 @@ RSpec.describe 'landing page', type: :feature do
   end
 
   describe 'as a visitor when I visit the landing page' do 
-      it 'I do not see the section of the page that lists existing users' do 
+    it 'I do not see the section of the page that lists existing users' do 
       @user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
       @user2 = User.create!(name: 'Mike', email: 'mike@turing.edu', password: "test")
       @user3 = User.create!(name: 'Meg', email: 'mstang@turing.edu', password: "test")
@@ -71,10 +71,10 @@ RSpec.describe 'landing page', type: :feature do
 
   describe 'as a registerd user when I visit the landing page' do
     it 'I see the section of the page that lists existing users' do 
-    user = User.create(name: 'Tom', email: 'tom@aol.com', password: 'test123')
-    @user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
-    @user2 = User.create!(name: 'Mike', email: 'mike@turing.edu', password: "test")
-    @user3 = User.create!(name: 'Meg', email: 'mstang@turing.edu', password: "test")
+      user = User.create(name: 'Tom', email: 'tom@aol.com', password: 'test123')
+      @user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
+      @user2 = User.create!(name: 'Mike', email: 'mike@turing.edu', password: "test")
+      @user3 = User.create!(name: 'Meg', email: 'mstang@turing.edu', password: "test")
 
       visit '/'
 
@@ -92,6 +92,17 @@ RSpec.describe 'landing page', type: :feature do
         expect(page).to have_content("mike@turing.edu")
         expect(page).to have_content("mstang@turing.edu")
       end
+    end
+  end
+
+  describe 'as a visitor when I visit the landing page' do 
+    it 'And then try to visit /dashboard I remain on the landing page And I see a message telling me that I must be logged in or registered to access my dashboard' do
+      visit '/'
+
+      visit 'dashboard'
+
+      expect(current_path).to eq('/')
+      expect(page).to have_content("You must be logged in or registered")
     end
   end
 end

@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(user_id_in_session)
-    @users = User.all
-    @movies = @user.viewing_parties.map { |party| MoviesFacade.find_movie(party.movie_id) }
-    @user_viewing_parties = UserViewingParty.all
+    if session[:id].nil?
+      redirect_to '/'
+      flash[:error] = "You must be logged in or registered"
+    else
+      @user = User.find(user_id_in_session)
+      @users = User.all
+      @movies = @user.viewing_parties.map { |party| MoviesFacade.find_movie(party.movie_id) }
+      @user_viewing_parties = UserViewingParty.all
+    end
   end
 
   def new
