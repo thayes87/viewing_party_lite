@@ -54,7 +54,7 @@ RSpec.describe 'landing page', type: :feature do
     end
   end
 
-  describe 'as a user when I visit the landing page' do 
+  describe 'as a visitor when I visit the landing page' do 
       it 'I do not see the section of the page that lists existing users' do 
       @user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
       @user2 = User.create!(name: 'Mike', email: 'mike@turing.edu', password: "test")
@@ -66,6 +66,32 @@ RSpec.describe 'landing page', type: :feature do
       expect(page).to_not have_content("mike@turing.edu")
       expect(page).to_not have_content("mstang@turing.edu")
 
+    end
+  end
+
+  describe 'as a registerd user when I visit the landing page' do
+    it 'I see the section of the page that lists existing users' do 
+    user = User.create(name: 'Tom', email: 'tom@aol.com', password: 'test123')
+    @user1 = User.create!(name: 'Erin', email: 'epintozzi@turing.edu', password: "test")
+    @user2 = User.create!(name: 'Mike', email: 'mike@turing.edu', password: "test")
+    @user3 = User.create!(name: 'Meg', email: 'mstang@turing.edu', password: "test")
+
+      visit '/'
+
+      click_link('Log In')
+
+      fill_in("Email", with: user.email)
+      fill_in("Password", with: 'test123')
+
+      click_on("Log In")
+
+      visit '/'
+
+      within '#existing_users' do
+        expect(page).to have_content("epintozzi@turing.edu")
+        expect(page).to have_content("mike@turing.edu")
+        expect(page).to have_content("mstang@turing.edu")
+      end
     end
   end
 end
